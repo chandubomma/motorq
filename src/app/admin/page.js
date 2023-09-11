@@ -8,7 +8,7 @@ import ChartComponent from '@/components/ChartComponent';
 const AdminPage = () => {
   // State for enrollment requests and selected enrollment
   const [enrollmentRequests, setEnrollmentRequests] = useState([]);
-  const [selectedEnrollment, setSelectedEnrollment] = useState(null);
+  
   const [enrollmentsData, setEnrollmentsData] = useState([]);
   
   // Fetch and format the data
@@ -31,15 +31,16 @@ const AdminPage = () => {
     // Replace with actual API call
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/enrollment-requests');
+        const response = await fetch(`http://localhost:3000/api/getenrollments`);
         const data = await response.json();
-        setEnrollmentRequests(data);
+        console.log(data)
+        setEnrollmentRequests(data.data);
       } catch (error) {
         console.error('Error fetching enrollment requests:', error);
       }
     };
 
-    fetchData();
+     fetchData();
   }, []);
 
   return (
@@ -48,9 +49,12 @@ const AdminPage = () => {
             <h1 className='my-3 font-semibold'>Enrollments and Customers Chart</h1>
             <ChartComponent data={enrollmentsData} />
         </div>
-        <AdminEnrollments/>
+        <AdminEnrollments enrollments={enrollmentRequests}/>
     </div>
   );
 };
 
 export default AdminPage;
+
+
+

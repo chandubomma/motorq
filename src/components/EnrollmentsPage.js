@@ -2,39 +2,39 @@
 
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-const enrollmentRequestData = [
-    {
-      id:'EN001',
-      customerId:'',
-      makeId: '',
-      modelId:'',
-      yearId: '',
-      vin: 'ABC123456789XYZ',
-      licensePlate: 'AB123CD',
-      status: 'Pending',
-      adminComment: '',
-      enrollmentTimestamp: new Date('2023-09-15T10:00:00Z'),
-      verdictTimestamp: null,
-    },
-    {
-        id:'EN002',
-      customerId:'',
-      makeId: '',
-      modelId: '',
-      yearId: '',
-      vin: 'XYZ987654321ABC',
-      licensePlate: 'CD456EF',
-      status: 'Accepted',
-      adminComment: 'Approved for enrollment.',
-      enrollmentTimestamp: new Date('2023-09-10T15:30:00Z'),
-      verdictTimestamp: new Date('2023-09-11T09:15:00Z'),
-    },
-    // Add more enrollment request objects as needed
-  ];
+// const enrollmentRequestData = [
+//     {
+//       id:'EN001',
+//       customerId:'',
+//       makeId: '',
+//       modelId:'',
+//       yearId: '',
+//       vin: 'ABC123456789XYZ',
+//       licensePlate: 'AB123CD',
+//       status: 'Pending',
+//       adminComment: '',
+//       enrollmentTimestamp: new Date('2023-09-15T10:00:00Z'),
+//       verdictTimestamp: null,
+//     },
+//     {
+//         id:'EN002',
+//       customerId:'',
+//       makeId: '',
+//       modelId: '',
+//       yearId: '',
+//       vin: 'XYZ987654321ABC',
+//       licensePlate: 'CD456EF',
+//       status: 'Accepted',
+//       adminComment: 'Approved for enrollment.',
+//       enrollmentTimestamp: new Date('2023-09-10T15:30:00Z'),
+//       verdictTimestamp: new Date('2023-09-11T09:15:00Z'),
+//     },
+//     // Add more enrollment request objects as needed
+//   ];
   
 
 
-const EnrollmentsPage = () => {
+const EnrollmentsPage = ({enrollmentRequestData}) => {
   const [enrollments, setEnrollments] = useState([]);
   const [expandedEnrollments, setExpandedEnrollments] = useState({});
   const [filterStatus, setFilterStatus] = useState(''); // Filter by enrollment status
@@ -137,21 +137,21 @@ const EnrollmentsPage = () => {
         <div key={enrollment.id} className="bg-white rounded-lg shadow-lg p-4 mb-4">
           <div className="flex justify-between">
             <div>
-              <p className="text-lg font-semibold">Enrollment ID: {enrollment.id}</p>
+              <p className="text-lg font-semibold">Enrollment ID: {enrollment._id}</p>
               <p>Status: {enrollment.status}</p>
-              <p>Timestamp: {format(enrollment.enrollmentTimestamp, 'yyyy-MM-dd HH:mm:ss')}</p>
+              <p>Timestamp: {enrollment.enrollmentTimestamp}</p>
             </div>
             <div>
               <button
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-                onClick={() => handleToggleDetails(enrollment.id)}
+                onClick={() => handleToggleDetails(enrollment._id)}
               >
-                {expandedEnrollments[enrollment.id] ? 'Hide Details' : 'View Details'}
+                {expandedEnrollments[enrollment._id] ? 'Hide Details' : 'View Details'}
               </button>
             </div>
           </div>
           {/* View Details section */}
-          {expandedEnrollments[enrollment.id] && (
+          {expandedEnrollments[enrollment._id] && (
             <div className="mt-4">
               {/* Display additional enrollment details here */}
               {/* Example: Vehicle details */}

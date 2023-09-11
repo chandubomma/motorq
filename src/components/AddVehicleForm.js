@@ -77,9 +77,6 @@ const EnrollmentForm = () => {
     //   newErrors.vin = 'VIN must be a 17-character alphanumeric string';
     // }
 
-    if (!formData.licensePlate) {
-      newErrors.licensePlate = 'License Plate is required';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -98,7 +95,7 @@ const EnrollmentForm = () => {
         model: '',
         year: '',
         vin: '',
-        licensePlate: '',
+       
       });
       setSubmitted(true);
     }
@@ -158,19 +155,7 @@ const EnrollmentForm = () => {
               />
               {errors.vin && <p className="text-red-500 text-sm">{errors.vin}</p>}
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">License Plate</label>
-              <input
-                type="text"
-                name="licensePlate"
-                value={formData.licensePlate}
-                onChange={handleInputChange}
-                className={`form-input ${errors.licensePlate ? 'border-red-500' : ''} w-80 h-fit border-2 border-blue-500 p-3.5 m-3 rounded-sm focus:outline-none`}
-              />
-              {errors.licensePlate && (
-                <p className="text-red-500 text-sm">{errors.licensePlate}</p>
-              )}
-            </div>
+            
             {/* Repeat similar code for other form fields */}
             <div className="mb-4 col-span-2 flex justify-center mt-16">
               <button

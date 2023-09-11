@@ -1,47 +1,45 @@
+'use client'
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
-const enrollmentRequestData = [
-  {
-    id: 'EN001',
-    customerId: '',
-    make: 'BMW',
-    model: 'X5',
-    year: '2022',
-    vin: 'ABC123456789XYZ',
-    licensePlate: 'AB123CD',
-    status: 'Pending',
-    adminComment: '',
-    enrollmentTimestamp: new Date('2023-09-15T10:00:00Z'),
-    verdictTimestamp: null,
-  },
-  {
-    id: 'EN002',
-    customerId: '',
-    make: 'Ford',
-    model: 'Mustang',
-    year: '2021',
-    vin: 'XYZ987654321ABC',
-    licensePlate: 'CD456EF',
-    status: 'Accepted',
-    adminComment: 'Approved for enrollment.',
-    enrollmentTimestamp: new Date('2023-09-10T15:30:00Z'),
-    verdictTimestamp: new Date('2023-09-11T09:15:00Z'),
-  },
-  // Add more enrollment request objects as needed
-];
+// const enrollmentRequestData = [
+//   {
+//     id: 'EN001',
+//     customerId: '',
+//     make: 'BMW',
+//     model: 'X5',
+//     year: '2022',
+//     vin: 'ABC123456789XYZ',
+//     licensePlate: 'AB123CD',
+//     status: 'Pending',
+//     adminComment: '',
+//     enrollmentTimestamp: new Date('2023-09-15T10:00:00Z'),
+//     verdictTimestamp: null,
+//   },
+//   {
+//     id: 'EN002',
+//     customerId: '',
+//     make: 'Ford',
+//     model: 'Mustang',
+//     year: '2021',
+//     vin: 'XYZ987654321ABC',
+//     licensePlate: 'CD456EF',
+//     status: 'Accepted',
+//     adminComment: 'Approved for enrollment.',
+//     enrollmentTimestamp: new Date('2023-09-10T15:30:00Z'),
+//     verdictTimestamp: new Date('2023-09-11T09:15:00Z'),
+//   },
+//   // Add more enrollment request objects as needed
+// ];
 
-const AdminEnrollments = () => {
-  const [enrollments, setEnrollments] = useState([]);
+const AdminEnrollments = ({enrollments}) => {
+  
   const [expandedEnrollments, setExpandedEnrollments] = useState({});
   const [filterStatus, setFilterStatus] = useState(''); // Filter by enrollment status
   const [sortBy, setSortBy] = useState('enrollmentTimestamp'); // Sort by enrollment timestamp by default
   const [searchVin, setSearchVin] = useState(''); // Search option for VIN
 
-  // Fetch enrollments (you need to implement this)
-  useEffect(() => {
-    setEnrollments(enrollmentRequestData);
-  }, []);
+  
 
   const handleToggleDetails = (enrollmentId) => {
     // Toggle the expanded state for the clicked enrollment card
@@ -50,16 +48,65 @@ const AdminEnrollments = () => {
       [enrollmentId]: !prevExpanded[enrollmentId],
     }));
   };
+ 
 
-  const handleApprove = (enrollmentId) => {
-    // Implement the logic to approve the enrollment with the given ID
-    // Update the enrollment status and admin comment as needed
+  const handleApprove = async (enrollmentId) => {
+    try {
+      // Send a POST request to update the enrollment status to "Accepted"
+      const response = await fetch(`http://localhost:3000/api/setenrollmentstatus`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          enrollmentId,
+          status: 'Accepted',
+        }),
+      });
+  
+      if (response.ok) {
+        // Enrollment status updated successfully
+        // Implement any additional logic or UI updates here
+        console.log('Enrollment approved successfully.');
+        window.location.reload();
+      } else {
+        // Handle errors if needed
+        console.error('Failed to approve enrollment.');
+      }
+    } catch (error) {
+      console.error('Error approving enrollment:', error);
+      
+    }
   };
-
-  const handleReject = (enrollmentId) => {
-    // Implement the logic to reject the enrollment with the given ID
-    // Update the enrollment status and admin comment as needed
+  
+  const handleReject = async (enrollmentId) => {
+    try {
+      // Send a POST request to update the enrollment status to "Rejected"
+      const response = await fetch(`http://localhost:3000/api/setenrollmentstatus`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          enrollmentId,
+          status: 'Rejected',
+        }),
+      });
+  
+      if (response.ok) {
+        // Enrollment status updated successfully
+        // Implement any additional logic or UI updates here
+        console.log('Enrollment rejected successfully.');
+        window.location.reload();
+      } else {
+        // Handle errors if needed
+        console.error('Failed to reject enrollment.');
+      }
+    } catch (error) {
+      console.error('Error rejecting enrollment:', error);
+    }
   };
+  
 
   const filteredEnrollments = enrollments
     .filter((enrollment) => {
@@ -131,22 +178,22 @@ const AdminEnrollments = () => {
         <div key={enrollment.id} className="bg-white h-fit rounded-lg shadow-lg p-4 mb-4">
           <div className="flex justify-between">
             <div>
-              <p className="text-lg font-semibold">Enrollment ID: {enrollment.id}</p>
+              <p className="text-lg font-semibold">Enrollment ID: {enrollment._id}</p>
               <p>Status: {enrollment.status}</p>
-              <p>Timestamp: {format(enrollment.enrollmentTimestamp, 'yyyy-MM-dd HH:mm:ss')}</p>
+              <p>Timestamp: {enrollment.enrollmentTimestamp}</p>
             </div>
             <div>
               {enrollment.status === 'Pending' && (
                 <div>
                   <button
                     className="bg-green-500 text-white py-2 m-2 my-4 px-4 rounded hover:bg-green-700"
-                    onClick={() => handleApprove(enrollment.id)}
+                    onClick={() => handleApprove(enrollment._id)}
                   >
                     Approve
                   </button>
                   <button
                     className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 ml-2"
-                    onClick={() => handleReject(enrollment.id)}
+                    onClick={() => handleReject(enrollment._id)}
                   >
                     Reject
                   </button>
@@ -156,7 +203,7 @@ const AdminEnrollments = () => {
                 <div>
                   <button
                     className="bg-red-500 text-white py-2 px-4 m-2 rounded hover:bg-red-700 ml-2"
-                    onClick={() => handleReject(enrollment.id)}
+                    onClick={() => handleReject(enrollment._id)}
                   >
                     Reject
                   </button>
@@ -166,7 +213,7 @@ const AdminEnrollments = () => {
                 <div>
                     <button
                     className="bg-green-500 text-white py-2 m-2 my-4 px-4 rounded hover:bg-green-700"
-                    onClick={() => handleApprove(enrollment.id)}
+                    onClick={() => handleApprove(enrollment._id)}
                     >
                         Approve
                     </button>
@@ -174,9 +221,9 @@ const AdminEnrollments = () => {
               )}
               <button
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 ml-2"
-                onClick={() => handleToggleDetails(enrollment.id)}
+                onClick={() => handleToggleDetails(enrollment._id)}
               >
-                {expandedEnrollments[enrollment.id] ? 'Hide Details' : 'View Details'}
+                {expandedEnrollments[enrollment._id] ? 'Hide Details' : 'View Details'}
               </button>
             </div>
           </div>
