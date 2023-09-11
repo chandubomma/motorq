@@ -1,6 +1,5 @@
 
-![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_30_36.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_30_47.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_31_01.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_31_11.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_31_31.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_31_44.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_30_25.png>)
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_30_36-1.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_30_47-1.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_31_01-1.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_31_11-1.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_31_31-1.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_31_44-1.png>) ![Alt text](<MotorQ and 1 more page - Personal - Microsoft​ Edge 11-09-2023 17_30_25-1.png>)
 
 ## Getting Started
 
